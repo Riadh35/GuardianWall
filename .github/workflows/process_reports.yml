@@ -1,0 +1,43 @@
+name: Process Spam Reports
+
+on:
+  # Runs every hour
+  schedule:
+    - cron: '0 * * * *'
+  # Also triggers immediately when an Issue is opened/closed/reopened
+  issues:
+    types: [opened, closed, reopened, labeled]
+  # Allow manual trigger from GitHub UI
+  workflow_dispatch:
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    # Needed to read issues and push the updated JSON
+    permissions:
+      contents: write
+      issues: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Process spam-report Issues → numbers.json
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO:     ${{ github.repository }}
+        run: python .github/scripts/process_reports.py
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name  "Guardian Wall Bot"
+          git config user.email "guardianwall-bot@users.noreply.github.com"
+          git add community/numbers.json
+          git diff --staged --quiet \
+            && echo "community/numbers.json unchanged — nothing to commit" \
+            || (git commit -m "chore: update community blacklist [skip ci]" && git push)
