@@ -19,7 +19,7 @@ from urllib.request import urlopen, Request
 GH_TOKEN   = os.environ.get("GH_TOKEN", "")
 REPO       = os.environ.get("REPO", "Riadh35/GuardianWall")
 OUTPUT     = "community/numbers.json"
-MIN_REPORTS = 2   # Minimum votes for a number to enter the community list
+MIN_REPORTS = 1   # TEST — seuil temporaire à 1 vote (remettre à 2 en production)
 
 
 def gh_get(path: str, params: str = "") -> list:
