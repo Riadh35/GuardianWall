@@ -10,6 +10,12 @@ on:
   # Allow manual trigger from GitHub UI
   workflow_dispatch:
 
+# Un seul run à la fois — évite les conflits de push quand plusieurs
+# Issues sont ouvertes/fermées simultanément.
+concurrency:
+  group: community-blacklist
+  cancel-in-progress: false
+
 jobs:
   process:
     runs-on: ubuntu-latest
