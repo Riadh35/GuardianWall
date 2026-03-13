@@ -1,20 +1,7 @@
 {
   "version": 1,
-  "updated_at": "2026-03-13T05:13:23Z",
-  "min_reports": 1,
-  "count": 2,
-  "numbers": [
-    {
-      "number": "0699000002",
-      "category": "Phishing",
-      "danger_level": 4,
-      "reports": 1
-    },
-    {
-      "number": "0612000001",
-      "category": "Spam",
-      "danger_level": 3,
-      "reports": 1
-    }
-  ]
+  "updated_at": "2026-03-13T05:15:08Z",
+  "min_reports": 2,
+  "count": 0,
+  "numbers": []
 }
